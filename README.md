@@ -1,7 +1,5 @@
 # pbp-tugas2
 
-This repository contains the source code for the PWS application. You can access the deployed application at the following link:
-
 [Link Deployment](http://muhammad-azzam31-tugas2.pbp.cs.ui.ac.id)
 
 ##### Jawaban Pertanyaan:
@@ -65,7 +63,7 @@ python manage.py startapp main
 ```
 
 #### 2.2. Tambahkan Main ke Settings
-Edit `settings.py` and add `'main'` to the `INSTALLED_APPS` list.
+Dalam `settings.py`, tambahkan `'main'` ke dalam list `INSTALLED_APPS`.
 
 #### 2.3. Buat Template
 - Buat folder dengan nama `templates` di dalam app `main` .
@@ -146,15 +144,15 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://pbp.cs.ui.ac.id/muhammad-azza
 
 ## Request-Response dalam Aplikasi Berbasis Django 
 
-![Django Request-Response Flow](https://example.com/diagram.png)
+![Django Request-Response Flow]([https://example.com/diagram.png](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*V5Rd2Czu9TYdEw6P-7RtGA.png))
 
-**Explanation**:
+**Penjelasan**:
 
-- **Client Request**: The client sends a request to the Django web application.
-- **urls.py**: The request is routed through `urls.py`, where it matches a defined URL pattern.
-- **views.py**: The matching pattern triggers a specific view in `views.py`, which contains the logic to process the request.
-- **models.py**: If the view requires database interaction, it communicates with `models.py`, which defines the data structure using Django's ORM.
-- **Response**: The view then returns a response, either rendering an HTML template or sending JSON data, which is sent back to the client.
+- **Request dari Client**: Client/Browser akan membuat request ke aplikasi melewati web server.
+- **urls.py**: Selanjutnya request client akan di handle oleh `urls.py`, dimana url akan di pasangkan dengan list url yang ada.
+- **views.py**: Jika sudah cocok, data akan diteruskan ke `views.py`, di sana ada fungsi yang berfungsi untuk memproses request sesuai logic yang telah dibuat.
+- **ORM/models.py**: Jika membutuhkan akses ke database, maka data akan di akses sesuai model yang sudah dibuat dalam `models.py`. Hasilnya, data yang dicari dalam db akan diteruskan ke template untuk dibuat jadi response.
+- **Response**: Terakhir, view akan membuat response ke client dengan mengembalikan template yang sesuai.
 
 ## Fungsi Git dalam pengembagan aplikasi 
 
@@ -174,4 +172,4 @@ Beberapa alasa utama mengapa Django baik untuk diajarkan ke-pemula adalah:
 
 ## Mengapa model pada Django disebut sebagai ORM?
 
-Django menggunakan ORM atau _Object relational management_ agar developer dapat dengan mudah mengakses database menggunakan kode python. ORM juga memudahkan developer untuk membuat I/O data dengan bentuk OOP.
+Django menggunakan ORM atau _Object relational management_ agar developer dapat dengan mudah mengakses database menggunakan kode python. ORM juga memudahkan developer untuk membuat I/O data dengan bentuk OOP. Selain itu, ORM juga dapat lebih mudah untuk di maintain dan di scale up karena adanya pemisahan data dalam bentuk objek-objek.
