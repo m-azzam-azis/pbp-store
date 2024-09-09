@@ -144,7 +144,9 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://pbp.cs.ui.ac.id/muhammad-azza
 
 ## Request-Response dalam Aplikasi Berbasis Django 
 
-![Django Request-Response Flow]([https://example.com/diagram.png](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*V5Rd2Czu9TYdEw6P-7RtGA.png))
+![Django Request-Response Flow](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*V5Rd2Czu9TYdEw6P-7RtGA.png)
+
+_diambil dari: https://miro.medium.com_
 
 **Penjelasan**:
 
