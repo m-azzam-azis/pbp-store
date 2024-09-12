@@ -1,59 +1,162 @@
 # pbp-tugas2
 
-This repository contains the source code for the PWS application. You can access the deployed application at the following link:
+[Link Deployment](http://muhammad-azzam31-tugas2.pbp.cs.ui.ac.id)
 
-[View Deployed Application](http://muhammad-azzam31-tugas2.pbp.cs.ui.ac.id)
+##### Jawaban Pertanyaan:
 
-## Implementation Details
+## Urutan Setup Aplikasi Django?
 
-### Step-by-Step Implementation
+### 1. Setup Django Project
 
-1. **Project Setup**:
+#### 1.1. Buat Project Directory Baru
+```bash
+mkdir tugas2
+cd tugas2
+```
 
-   - Initialized a Django project using `django-admin startproject`.
-   - Set up a virtual environment and installed necessary dependencies.
-   - Configured the project settings, including the database setup (PostgreSQL).
+#### 1.2. Set Up Virtual Environment
+```bash
+python3 -m venv env
+source env/bin/activate
+```
 
-2. **App Creation**:
+#### 1.3. Buat File `requirements.txt` 
+```bash
+echo "django
+gunicorn
+whitenoise
+psycopg2-binary
+requests
+urllib3" >> requirements.txt
+```
 
-   - Created the core application with `python manage.py startapp core`.
-   - Defined models in `models.py` corresponding to the required database schema.
-   - Ran migrations to apply the models to the database using `python manage.py migrate`.
+#### 1.4. Install Dependencies
+```bash
+pip install -r requirements.txt
+```
 
-3. **Views and URLs**:
+#### 1.5. Buat Folder untuk Projek
+```bash
+django-admin startproject my_project .
+```
 
-   - Created views in `views.py` to handle the business logic.
-   - Mapped views to URLs in `urls.py` to define accessible routes.
-   - Created templates in the `templates` directory and linked them with views.
+#### 1.6. Tambahkan File `.gitignore` 
+isi dengan seperti di [Tutoial 1](https://pbp-fasilkom-ui.github.io/ganjil-2025/docs/tutorial-0#tutorial-unggah-proyek-ke-repositori-github)
 
-4. **Static and Media Files**:
 
-   - Configured static and media file settings in `settings.py`.
-   - Added necessary CSS, JS, and image files to the `static` directory.
+#### 1.7. Set Up Repo Git dan Github 
+```bash
+echo "tugas2" >> README.MD
+git init
+git add .
+git commit -m "first commit"
+git branch -M main
+git remote add origin git@github.com:your-username/pbp-tugas2.git
+git push -u origin main
+```
 
-5. **Testing**:
+### 2. Buat Main App
 
-   - Wrote unit tests for views and models to ensure the correctness of the application.
-   - Used Django’s test client to simulate requests and validate responses.
+#### 2.1. Init Folder Main
+```bash
+python manage.py startapp main
+```
 
-6. **Deployment**:
-   - Configured the application for deployment using Gunicorn and Nginx.
-   - Deployed the application on a cloud service provider like AWS or Heroku.
-   - Set up environment variables and security configurations for the production environment.
+#### 2.2. Tambahkan Main ke Settings
+Dalam `settings.py`, tambahkan `'main'` ke dalam list `INSTALLED_APPS`.
 
-### Request-Response Flow in Django
+#### 2.3. Buat Template
+- Buat folder dengan nama `templates` di dalam app `main` .
+- Buat file dengan nama `main.html` di dalam `templates` folder, lalu isi HTML-nya.
 
-![Django Request-Response Flow](https://example.com/diagram.png)
+### 3. Buat Model Django
 
-**Explanation**:
+#### 3.1. Init Model dan Atribut dalam `models.py`
+```python
+from django.db import models
 
-- **Client Request**: The client sends a request to the Django web application.
-- **urls.py**: The request is routed through `urls.py`, where it matches a defined URL pattern.
-- **views.py**: The matching pattern triggers a specific view in `views.py`, which contains the logic to process the request.
-- **models.py**: If the view requires database interaction, it communicates with `models.py`, which defines the data structure using Django's ORM.
-- **Response**: The view then returns a response, either rendering an HTML template or sending JSON data, which is sent back to the client.
+class ShopEntry(models.Model):
+    # buat attributes disini
+```
 
-### Fungsi Git dalam pengembagan aplikasi
+#### 3.2. Migrasi Model Baru ke Database
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
+
+### 4. Buat Fungsi dalam Views
+
+#### 4.1. Buat File `views.py` dan Masukkan Fungsi
+```python
+from django.shortcuts import render
+
+def show_main(request):
+    context = {
+        # add your context dictionary here
+    }
+    return render(request, "main.html", context)
+```
+
+### 5. Setup Routing URL 
+
+#### 5.1. Definisikan URL dalam `urls.py` of `main` App
+```python
+from django.urls import path
+from main.views import show_main
+
+app_name = 'main'
+
+urlpatterns = [
+    path('', show_main, name='show_main'),
+]
+```
+
+#### 5.2. Masukan Main ke dalam `urls.py` dalam Parent Folder
+```python
+...
+
+from django.urls import path, include
+...
+...
+
+urlpatterns = [
+    path('', include('main.urls')),
+]
+...
+
+```
+
+### 6. Deployment ke PWS
+
+#### 6.1. Set Up PWS Repository
+buat projek baru, simpan credentials dan jalankan:
+```bash
+git remote add pws http://pbp.cs.ui.ac.id/your-username/tugas2
+git branch -M master
+git push pws master
+```
+
+#### 6.2. Update `ALLOWED_HOSTS` dalam `settings.py`
+```python
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://pbp.cs.ui.ac.id/muhammad-azzam31-tugas2"]
+```
+
+## Request-Response dalam Aplikasi Berbasis Django 
+
+![Django Request-Response Flow](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*V5Rd2Czu9TYdEw6P-7RtGA.png)
+
+_diambil dari: https://miro.medium.com_
+
+**Penjelasan**:
+
+- **Request dari Client**: Client/Browser akan membuat request ke aplikasi melewati web server.
+- **urls.py**: Selanjutnya request client akan di handle oleh `urls.py`, dimana url akan di pasangkan dengan list url yang ada.
+- **views.py**: Jika sudah cocok, data akan diteruskan ke `views.py`, di sana ada fungsi yang berfungsi untuk memproses request sesuai logic yang telah dibuat.
+- **ORM/models.py**: Jika membutuhkan akses ke database, maka data akan di akses sesuai model yang sudah dibuat dalam `models.py`. Hasilnya, data yang dicari dalam db akan diteruskan ke template untuk dibuat jadi response.
+- **Response**: Terakhir, view akan membuat response ke client dengan mengembalikan template yang sesuai.
+
+## Fungsi Git dalam pengembagan aplikasi 
 
 Git dapat mempermudah developer dalam melakukan version control dalam _code base_ aplikasi mereka. Selain itu, ada :
 
@@ -61,14 +164,14 @@ Git dapat mempermudah developer dalam melakukan version control dalam _code base
 - **Kolaborasi**: Kita dapat berkolaborasi dalam pengembangan _software_ dengan menggunakan platform berbasis git seperti Github atau Gitlab.
 - **Fitur Branch**: Developer dapat membuat banyak branch/cabang kode. Selain untuk kolaborasi, branch berguna untuk melakukan eksperimen tanpa mengubah kode produksi.
 
-### Kenapa Django diajarkan sebagai pengantar framework?
+## Kenapa Django diajarkan sebagai pengantar framework?
 
 Beberapa alasa utama mengapa Django baik untuk diajarkan ke-pemula adalah:
 
-- **Kemudahan Syntax**: Django menggunakan syntax python yang cenderung mudah, Selain itu, banyak _built-in_ fitur yang sudah di implementasi oleh Django demi kemudahan pengguna.
-- **Full-stack Framework**: Seorang developer dapat membuat aplikasi full-stack hanya dengan framework django saja. Hal ini mempersingkat _learning curve_ mahasiswa dalam PBP.
-- **Well Established**: Django sudah ada sejak 2005. Selain itu, Django merupakan program _open-source_, artinya Django bersifat gratis, dan memiliki supoort dari komunitas developer. Dokumentasi dan tutorial django juga tersedia lengkap di internet.
+- **Kemudahan sintaks**: Django menggunakan syntax python yang cenderung mudah, Selain itu, banyak _built-in_ fitur yang sudah di implementasi oleh Django demi kemudahan pengguna.
+- **Framework fullstack**: Seorang developer dapat membuat aplikasi full-stack hanya dengan framework django saja. Hal ini mempersingkat _learning curve_ mahasiswa dalam PBP.
+- **Well established**: Django sudah ada sejak 2005. Selain itu, Django merupakan program _open-source_, artinya Django bersifat gratis, dan memiliki supoort dari komunitas developer. Dokumentasi dan tutorial django juga tersedia lengkap di internet.
 
-### Mengapa model pada Django disebut sebagai ORM?
+## Mengapa model pada Django disebut sebagai ORM?
 
-Django menggunakan ORM atau _Object relational management_ agar developer dapat dengan mudah mengakses database menggunakan kode python. ORM juga memudahkan developer untuk membuat I/O data dengan bentuk OOP.
+Django menggunakan ORM atau _Object relational management_ agar developer dapat dengan mudah mengakses database menggunakan kode python. ORM juga memudahkan developer untuk membuat I/O data dengan bentuk OOP. Selain itu, ORM juga dapat lebih mudah untuk di maintain dan di scale up karena adanya pemisahan data dalam bentuk objek-objek.
