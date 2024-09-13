@@ -1,6 +1,6 @@
 # pbp-tugas2
 
-[Link Deployment](http://muhammad-azzam31-store.pbp.cs.ui.ac.id)
+[Link Deployment](http://muhammad-azzam31-pbpstore.pbp.cs.ui.ac.id)
 
 ##### Jawaban Pertanyaan:
 
