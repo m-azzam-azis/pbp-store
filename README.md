@@ -2,7 +2,9 @@
 
 [Link Deployment](http://muhammad-azzam31-pbpstore.pbp.cs.ui.ac.id)
 
-##### Jawaban Pertanyaan:
+ Agar README tidak terlalu panjang, jawaban tiap tugas saya taruh di branch `tugas<i>` dengan i nomor tugas
+
+#### Jawaban Pertanyaan:
 
 ## Urutan Setup Aplikasi Django?
 
