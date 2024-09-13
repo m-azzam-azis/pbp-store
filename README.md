@@ -1,6 +1,6 @@
 # pbp-tugas2
 
-[Link Deployment](http://muhammad-azzam31-tugas2.pbp.cs.ui.ac.id)
+[Link Deployment](http://muhammad-azzam31-pbpstore.pbp.cs.ui.ac.id)
 
  Agar README tidak terlalu panjang, jawaban tiap tugas saya taruh di branch `tugas<i>` dengan i nomor tugas
 
@@ -134,14 +134,14 @@ urlpatterns = [
 #### 6.1. Set Up PWS Repository
 buat projek baru, simpan credentials dan jalankan:
 ```bash
-git remote add pws http://pbp.cs.ui.ac.id/your-username/tugas2
+git remote add pws http://pbp.cs.ui.ac.id/your-username/pbpstore
 git branch -M master
 git push pws master
 ```
 
 #### 6.2. Update `ALLOWED_HOSTS` dalam `settings.py`
 ```python
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://pbp.cs.ui.ac.id/muhammad-azzam31-tugas2"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://pbp.cs.ui.ac.id/muhammad-azzam31-pbpstore"]
 ```
 
 ## Request-Response dalam Aplikasi Berbasis Django 
