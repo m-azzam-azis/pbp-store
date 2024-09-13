@@ -158,7 +158,7 @@ git push pws master
 #### 6.2. Update `ALLOWED_HOSTS` dalam `settings.py`
 
 ```python
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://pbp.cs.ui.ac.id/muhammad-azzam31-store"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "http://pbp.cs.ui.ac.id/muhammad-azzam31-pbpstore"]
 ```
 
 ## Request-Response dalam Aplikasi Berbasis Django
