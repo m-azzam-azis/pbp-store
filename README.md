@@ -1,4 +1,4 @@
-# pbp-tugas3
+# pbp-tugas4
 
 [Link Deployment](http://muhammad-azzam31-pbpstore.pbp.cs.ui.ac.id)
 
@@ -6,51 +6,67 @@ Agar README tidak terlalu panjang, jawaban tiap tugas saya taruh di branch `tuga
 
 #### Jawaban Pertanyaan:
 
-## Jelaskan mengapa kita memerlukan data delivery dalam pengimplementasian sebuah platform?
+## Perbedaan HttpResponseRedirect() dan redirect()?
 
-Data delivery dibutuhkan agar aplikasi kita dapat digunakan ulang di banyak tempat. Seminimal mungkin, data yang ada di server kita harus bisa ditampilkan dalam aplikasi local kita. Selanjutnya, saat kita ingin mempublish site kita untuk digunakan banyak orang, data kita juga butuh di deliver ke client host masing-masing pengguna.
+**HttpResponseRedirect()**: Merupakan class yang mengembalikan respons redirect ke URL tertentu. Argumen hanya dapat berupa url saja.
+**redirect()**: Merupakan fungsi shortcut yang lebih fleksibel. Dapat menerima URL, nama view, atau objek sebagai argumen. Argumen selain url akan diproses dibalik layar, dan hasil return-nya akan berupa sebuah HttpResponseRedirect() dengan argumen url yang sesuai.
 
-## Menurutmu, mana yang lebih baik antara XML dan JSON? Mengapa JSON lebih populer dibandingkan XML?
+[Sumber Stack Overflow Forum](https://stackoverflow.com/questions/13304149/what-the-difference-between-using-django-redirect-and-httpresponseredirect)
 
-Untuk preferensi pribadi, saya lebih suka ke JSON. beberapa poin utama yang saya pikirkan yang menjadi alasan JSON lebih di gunakan adalah:
+## Perbedaan Authentication dan Authorization?
 
-- **Fleksibilitas Formatting**: JSON dikirim dalam bentuk Objek yang dapat dengan mudah dimodifikasi, baik secara struktur maupun cara menampilkannya dalam page kita. Di lain sisi XML memaksa kita untuk menampilkan data sesuai bentuk data yang dikirm dari server.
-- **Ukuran Data**: JSON hanya mengirim data berbentuk objek biasa, sedangkan XML memuat data dalam bentuk struktur `tag`, hal tersebut membuat data lebih besar dan lama untuk di proses
-- **Readability**: Membaca data dalam JSON jauh lebih mudah dan intuitif dibandingkan dengan data dalam bentuk XML
+- **Autentikasi**: Proses untuk memverifikasi identitas pengguna.
+- **Otorisasi**: Proses untuk memberikan hak akses ke bagian tertentu dari aplikasi, biasanya setelah pengguna berhasil diautentikasi.
 
-## Jelaskan fungsi dari method is_valid() pada form Django dan mengapa kita membutuhkan method tersebut?
+### Autentikasi saat Login:
 
-Method `is_valid()` pada form Django digunakan validasi data yang ada dikirm lewat form. `is_valid()` akan mengecek validitas form sesuai batasan yang sudah kita buat, seperti: minimal karakter, jenis input, hingga boleh/tidaknya sebuah field untuk kosong (tidak diisi)
+Dalam fitur login, yang digunakan adalah authentikasi, yaitu memverifikasi identitas pengguna dengan menggunakan username dan password.
 
-## Mengapa kita membutuhkan csrf_token saat membuat form di Django? Apa yang dapat terjadi jika kita tidak menambahkan csrf_token pada form Django? Bagaimana hal tersebut dapat dimanfaatkan oleh penyerang?
+### Implementasi Auth dalam Django
 
-csrf adalah singkatan dari: Cross-Site Request Forgery, sebuah jenis serangan siber dimana penyerang dapat mengakses sebuah aplikasi tanpa persetujuan pengguna asli dengan cara mencuri token milik pengguna.
+Dalam Django, otorisasi dan autentikasi dapat dilakukan dengan menggunakan import modul bernama `django.contrib.auth`. Modul tersebut sudah memiliki fitur yang lengkap, mulai dari form register, login, permission (otorisasi), dan sebagainya.
 
-Kita membutuhkan csrf_token dalam form Django agar token diperbarui setiap kali user masuk ke dalam aplikasi (disebut juga session). Kode token di-generate secara random setiap session agar peretas tidak bisa mencuri token pengguna dan digunakan saat user sudah keluar dari aplikasi.
+[Sumber Django Documentation](https://docs.djangoproject.com/en/stable/topics/auth/default/#authentication-and-authorization)
 
-Tanpa csrf_token, penyerang dapat mengakses akun user dan mensubmit form yang ada dalam aplikasi. Contohnya membuat pembelian, mengganti password, dan sebagainya.
+## Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?
 
-## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial).
+Django mengingat pengguna yang telah login menggunakan **session cookies**. Setelah pengguna berhasil login, Django menyimpan sesi pengguna di server dan mengirimkan _session ID_ melalui cookie ke browser pengguna. Cookie ini dikirim dikrim setiap kali ada `request` dari client pengguna. Hal tersebut memungkinkan Django untuk mengingat user tanpa haru melakukan autentikasi berulang kali.
 
-- **Buat Base**: Buat folder `template` di `root` folder dan isi dengan `base.html`. Setelah itu setup url agar base menjadi template aplikasi kedepannya.
-- **Buat Page Forms dan Hasil**: dengan meng-extend `base.html` file, kita bisa membuat form dan menampilkan hasilnya di pages utama dibawah npm dan nama
-- **Update File `Views`**: Buat fungsi baru di views yang mengambil response request atas masing-masing hasil form yang kta buat. Setelah itu fungsi akan me-retur http request sesuai page yang kita inginkan.
-- **Update URL**: Buat `url_pattern` baru dengan meng-import nama page dari views.
+### Kegunaan lain dari cookies:
 
-## Screenshot Postman:
+- **Menyimpan preferensi pengguna**: Seperti tema situs (gelap/terang) atau pilihan bahasa.
+- **Melacak aktivitas pengguna**: Digunakan dalam aplikasi e-commerce untuk menyimpan keranjang belanja atau riwayat pencarian.
+- **Menyimpan kredensial device**: Memungkinkan pengguna tetap login dalam jangka waktu yang dapat ditentukan tanpa harus melakukan login berulang kali.
 
-### JSON:
+### Apakah semua cookies aman digunakan?
 
-<img width="618" alt="SCR-20240912-keex" src="https://github.com/user-attachments/assets/882758ce-3521-4603-bc2b-9cb23e1afc6f">
+Tidak, penggunaan cookies akan selalu memiliki risiko keamanan, terutama jika cookies tidak diatur dengan benar. Beberapa risiko dan solusi untuk meningkatkan keamanan cookies di Django adalah:
 
-### XML:
+- **Cross-Site Scripting (XSS)**: Penyerang dapat mencuri cookies jika mereka dapat meg-_inject_ skrip berbahaya ke halaman web. Django dapat mengatasi ini dengan menggunakan flag `HttpOnly` yang dapat mencegah injeksi javascript.
+- **Man-in-the-middle (MITM) attacks**: Jika cookie dikirim melalui koneksi tidak terenkripsi (HTTP), maka bisa disadap oleh pihak ketiga. Untuk menghindari ini, gunakan flag `Secure` yang memastikan cookie hanya dikirim melalui koneksi HTTP**S**.
+- **Cross-Site Request Forgery (CSRF)**: Sebuah serangan yang mengeksploitasi sesi pengguna untuk mengakses akun pengguna tanpa sepengetahuan mereka. Django memiliki fitur form CSRF untuk mencegah hal ini.
 
-<img width="623" alt="SCR-20240912-kegl" src="https://github.com/user-attachments/assets/ba5446b0-8f8c-4185-8adf-4bf987851d4c">
+### Untuk keamanan tambahan:
 
-### JSON by ID:
+- Pastikan validasi dan perlindungan CSRF selalu diaktifkan.
+- Gunakan `HttpOnly` untuk melindungi cookies dari skrip berbahaya.
+- Gunakan `Secure` untuk mengirim cookies hanya melalui HTTPS.
 
-<img width="626" alt="SCR-20240912-kelh" src="https://github.com/user-attachments/assets/1f4d660e-eac2-4326-b02a-44789c09d8a4">
+[Sumber Django Documentation](https://docs.djangoproject.com/en/stable/topics/http/sessions/)
 
-### XML by ID:
+## Bagaimana cara implementasi checklist secara step-by-step?
 
-<img width="624" alt="SCR-20240912-keii" src="https://github.com/user-attachments/assets/2f3f8a6e-b5c9-4625-815e-d053ac1f7cf1">
+1. **Register, Login, dan Logout**:
+   - membuat ketiga fungsi tersebut dalam file `views.py`
+   - menambahkan url masing-masing fitur tersebut ke dalam `urls.py` sesuai url masing-masing
+   - menambahkan fitur otorisasi dengan decorator method pada fungsi `main`
+2. **Menyambung Model dengan User**:
+   - menambahkan foreign key ke dalam objek user dalam `models.py`
+   - melakukan `python manage.py makemigrations` setelah menambahkan foreign key
+   - membuat satu dummy account saat di prompt
+   - membuat dummy account dan melakukan `python manage.py migrate`
+3. **Membuat Dummy Account**:
+   - menyalakan server dan membuat satu akun baru
+   - login dengan akun baru, setelah itu isi form dengan dummy data sebanyak tiga kali
+4. **Menampilkan Detail Login**
+   - menambahkan sebuah text yang berisi informasi terakhir login dalan `main.html`
