@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect   # Tambahkan import redirect di baris ini
+from django.shortcuts import render, redirect, reverse   # Tambahkan import redirect di baris ini
 from main.forms import ShopEntryForm
 from main.models import ShopEntry
 from django.http import HttpResponse
@@ -89,3 +89,26 @@ def logout_user(request):
     response = HttpResponseRedirect(reverse('main:login'))
     response.delete_cookie('last_login')
     return response
+
+def edit_shop_item(request, id):
+    # Get mood entry berdasarkan id
+    shop_item = ShopEntry.objects.get(pk = id)
+
+    # Set mood entry sebagai instance dari form
+    form = ShopEntryForm(request.POST or None, instance=shop_item)
+
+    if form.is_valid() and request.method == "POST":
+        # Simpan form dan kembali ke halaman awal
+        form.save()
+        return HttpResponseRedirect(reverse('main:show_main'))
+
+    context = {'form': form}
+    return render(request, "edit_shop_item.html", context)
+
+def delete_shop_item(request, id):
+    # Get mood berdasarkan id
+    item = ShopEntry.objects.get(pk = id)
+    # Hapus mood
+    item.delete()
+    # Kembali ke halaman awal
+    return HttpResponseRedirect(reverse('main:show_main'))
