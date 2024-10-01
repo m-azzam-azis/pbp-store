@@ -1,13 +1,13 @@
 <div class="relative ">
   <div class="absolute top-2 z-10 left-1/2 -translate-x-1/2 flex items-center -space-x-2 h-fit">
   </div>
-  <div class="relative top-5 bg-yellow-100/20 shadow-md rounded-lg mb-6 break-inside-avoid flex flex-col border-2 border-yellow-700 transform transition-transform duration-300 h-fit">
-    <div class="flex bg-[#f9e4bc] rounded-t-lg">
-      <div class=" text-gray-800 p-4 rounded-tl-lg  flex-1">
-        <h1 class="font-bold text-5xl mb-2">{{shop_entry.name}}</h1>
+  <div class="relative top-5 bg-yellow-100/20 shadow-md rounded-lg mb-6 break-inside-avoid flex flex-col border-2 border-yellow-700 transform transition-transform duration-300 h-fit  ">
+    <div class="flex bg-[#f9e4bc] rounded-t-lg w-full justify-between">
+      <div class="text-gray-800 p-4 rounded-tl-lg w-[80%]">
+        <h1 class="font-bold text-5xl mb-2 overflow-clip ">{{shop_entry.name}}</h1>
         <p class="text-gray-800">Rp{{shop_entry.price}}</p>
       </div>
-      <div class="flex flex-col flex h-full">
+      <div class="flex flex-col flex h-full w-fit">
         <a href="{% url 'main:edit_shop_item' shop_entry.pk %}" class="bg-yellow-600 hover:bg-yellow-800 text-white p-2 transition duration-300 shadow-md rounded-tr-md">
           <svg xmlns="http://www.w3.org/2000/svg" class="h-full w-7" viewBox="0 0 20 20" fill="currentColor">
             <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />

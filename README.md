@@ -1,4 +1,4 @@
-# pbp-tugas4
+# pbp-tugas5
 
 [Link Deployment](http://muhammad-azzam31-pbpstore.pbp.cs.ui.ac.id)
 
@@ -6,67 +6,48 @@ Agar README tidak terlalu panjang, jawaban tiap tugas saya taruh di branch `tuga
 
 #### Jawaban Pertanyaan:
 
-## Perbedaan HttpResponseRedirect() dan redirect()?
+# Panduan CSS dan Konsep Responsive Design
 
-**HttpResponseRedirect()**: Merupakan class yang mengembalikan respons redirect ke URL tertentu. Argumen hanya dapat berupa url saja.
-**redirect()**: Merupakan fungsi shortcut yang lebih fleksibel. Dapat menerima URL, nama view, atau objek sebagai argumen. Argumen selain url akan diproses dibalik layar, dan hasil return-nya akan berupa sebuah HttpResponseRedirect() dengan argumen url yang sesuai.
+## Urutan Prioritas Pengambilan CSS Selector
 
-[Sumber Stack Overflow Forum](https://stackoverflow.com/questions/13304149/what-the-difference-between-using-django-redirect-and-httpresponseredirect)
+Jika sebuah elemen memiliki lebih dari satu selector CSS, maka _style_ yang di-_apply_ mengikuti urutan berikut:
 
-## Perbedaan Authentication dan Authorization?
+1. **Inline Style**: Style yang langsung didefinisikan pada elemen HTML dengan atribut `style`.
+2. **ID Selector**: Selektor dengan `#id` memiliki prioritas lebih tinggi daripada class atau tag selector.
+3. **Class, Attribute, dan Pseudo-Class Selectors**: Selektor seperti `.class`, `[attribute]`, dan `:hover` memiliki prioritas di bawah ID.
+4. **Tag Selector**: Selektor yang memilih elemen berdasarkan nama tag HTML seperti `div`, `p`, dll.
+5. **Universal Selector & Inherited Styles**: Selektor `*` dan style yang dihasilkan dari elemen parent.
 
-- **Autentikasi**: Proses untuk memverifikasi identitas pengguna.
-- **Otorisasi**: Proses untuk memberikan hak akses ke bagian tertentu dari aplikasi, biasanya setelah pengguna berhasil diautentikasi.
+Prioritas CSS juga dapat dipengaruhi oleh **specificity** (spesifisitas) dan **!important**, di mana `!important` mengesampingkan semua prioritas lainnya.
 
-### Autentikasi saat Login:
+[Sumber W3C](https://www.w3schools.com/css/css_specificity.asp)
 
-Dalam fitur login, yang digunakan adalah authentikasi, yaitu memverifikasi identitas pengguna dengan menggunakan username dan password.
+## Mengapa Responsive Design Penting?
 
-### Implementasi Auth dalam Django
+**Responsive design** penting karena dapat memungkinkan sebuah aplikasi dapat digunakan dengan nyaman di berbagai ukuran device. Responsive design dapat menyesuaikan isi konten sesuai device, seperti: hp, tablet, hingga desktop. Konsep responsive design memastikan konten tetap mudah digunakan terlepas dari perangkat yang digunakan pengguna.
 
-Dalam Django, otorisasi dan autentikasi dapat dilakukan dengan menggunakan import modul bernama `django.contrib.auth`. Modul tersebut sudah memiliki fitur yang lengkap, mulai dari form register, login, permission (otorisasi), dan sebagainya.
+- **Contoh aplikasi yang sudah menerapkan responsive design**: Facebook, Scele, Youtube. layout aplikasi berubah seusai ukuran device yang digunakan
+- **Contoh aplikasi yang belum menerapkan responsive design**: PWS, Siaren. Sudah tidak responsive, tidak secure lagi
 
-[Sumber Django Documentation](https://docs.djangoproject.com/en/stable/topics/auth/default/#authentication-and-authorization)
+[Sumber MDN Responsive Web Design](https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Responsive_Design)
 
-## Bagaimana Django mengingat pengguna yang telah login? Jelaskan kegunaan lain dari cookies dan apakah semua cookies aman digunakan?
+## Perbedaan Margin, Border, dan Padding
 
-Django mengingat pengguna yang telah login menggunakan **session cookies**. Setelah pengguna berhasil login, Django menyimpan sesi pengguna di server dan mengirimkan _session ID_ melalui cookie ke browser pengguna. Cookie ini dikirim dikrim setiap kali ada `request` dari client pengguna. Hal tersebut memungkinkan Django untuk mengingat user tanpa haru melakukan autentikasi berulang kali.
+- **Margin**: Area di bagian **luar** elemen, memberikan jarak antara elemen dengan elemen lain di sekitarnya.
+- **Border**: Garis yang **mengelilingi** elemen, menjadi pembatas padding dan margin atau bagian dalam dan luar elemen.
+- **Padding**: Area di bagian **dalam** elemen, memberikan jarak antara konten elemen dan batas elemen (border).
 
-### Kegunaan lain dari cookies:
+Dapat diimplementasi dengan tailwind dengan menambahkan class dibawah ke sebuah elemen:
+`class="w-20 h-10 m-6 p-4 border-4 border-orange-500"`
 
-- **Menyimpan preferensi pengguna**: Seperti tema situs (gelap/terang) atau pilihan bahasa.
-- **Melacak aktivitas pengguna**: Digunakan dalam aplikasi e-commerce untuk menyimpan keranjang belanja atau riwayat pencarian.
-- **Menyimpan kredensial device**: Memungkinkan pengguna tetap login dalam jangka waktu yang dapat ditentukan tanpa harus melakukan login berulang kali.
+Hasl yang dihaslikan kurang lebih seperti ini (padding tdk ada warnanya):
+[Sumber MDN Box Model](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*M1rrBjfUxoPNsda6s-V5MA.png)
 
-### Apakah semua cookies aman digunakan?
+## Konsep Flexbox dan Grid Layout
 
-Tidak, penggunaan cookies akan selalu memiliki risiko keamanan, terutama jika cookies tidak diatur dengan benar. Beberapa risiko dan solusi untuk meningkatkan keamanan cookies di Django adalah:
+- **Flexbox**: Layout **satu dimensi** yang digunakan untuk menyusun elemen dalam satu arah (horizontal atau vertikal).
+  - **Pemakaian**: Flexbox lebih baik digunakan jika kita ingin ukuran container menyesuaikan isi.
+- **Grid Layout**: Layout **dua dimensional** yang memungkinkan penempatan elemen secara horizontal dan vertikal.
+  - **Pemakaian**: Grid lebih baik digunakan jika kita ingin ukuran konten menyesuaikan ukuran container.
 
-- **Cross-Site Scripting (XSS)**: Penyerang dapat mencuri cookies jika mereka dapat meg-_inject_ skrip berbahaya ke halaman web. Django dapat mengatasi ini dengan menggunakan flag `HttpOnly` yang dapat mencegah injeksi javascript.
-- **Man-in-the-middle (MITM) attacks**: Jika cookie dikirim melalui koneksi tidak terenkripsi (HTTP), maka bisa disadap oleh pihak ketiga. Untuk menghindari ini, gunakan flag `Secure` yang memastikan cookie hanya dikirim melalui koneksi HTTP**S**.
-- **Cross-Site Request Forgery (CSRF)**: Sebuah serangan yang mengeksploitasi sesi pengguna untuk mengakses akun pengguna tanpa sepengetahuan mereka. Django memiliki fitur form CSRF untuk mencegah hal ini.
-
-### Untuk keamanan tambahan:
-
-- Pastikan validasi dan perlindungan CSRF selalu diaktifkan.
-- Gunakan `HttpOnly` untuk melindungi cookies dari skrip berbahaya.
-- Gunakan `Secure` untuk mengirim cookies hanya melalui HTTPS.
-
-[Sumber Django Documentation](https://docs.djangoproject.com/en/stable/topics/http/sessions/)
-
-## Bagaimana cara implementasi checklist secara step-by-step?
-
-1. **Register, Login, dan Logout**:
-   - membuat ketiga fungsi tersebut dalam file `views.py`
-   - menambahkan url masing-masing fitur tersebut ke dalam `urls.py` sesuai url masing-masing
-   - menambahkan fitur otorisasi dengan decorator method pada fungsi `main`
-2. **Menyambung Model dengan User**:
-   - menambahkan foreign key ke dalam objek user dalam `models.py`
-   - melakukan `python manage.py makemigrations` setelah menambahkan foreign key
-   - membuat satu dummy account saat di prompt
-   - membuat dummy account dan melakukan `python manage.py migrate`
-3. **Membuat Dummy Account**:
-   - menyalakan server dan membuat satu akun baru
-   - login dengan akun baru, setelah itu isi form dengan dummy data sebanyak tiga kali
-4. **Menampilkan Detail Login**
-   - menambahkan sebuah text yang berisi informasi terakhir login dalan `main.html`
+[Sumber simplilearn flex vs grid](https://www.simplilearn.com/tutorials/css-tutorial/css-grid-vs-flexbox#:~:text=Flexbox%20is%20made%20for%20one,Grids%20can%20work%20on%20both.)

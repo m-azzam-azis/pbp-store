@@ -39,7 +39,7 @@
         <p class="text-center text-gray-600 mt-4">Belum ada item dalam PBP Shop :|.</p>
     </div>
     {% else %}
-    <div class="grid grid-cols-2 gap-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-10">
         {% for shop_entry in shop_entries %}
             {% include 'card_shop_item.html' with shop_entry=shop_entry%}
         {% endfor %}
