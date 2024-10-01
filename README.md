@@ -37,17 +37,57 @@ Prioritas CSS juga dapat dipengaruhi oleh **specificity** (spesifisitas) dan **!
 - **Border**: Garis yang **mengelilingi** elemen, menjadi pembatas padding dan margin atau bagian dalam dan luar elemen.
 - **Padding**: Area di bagian **dalam** elemen, memberikan jarak antara konten elemen dan batas elemen (border).
 
-Dapat diimplementasi dengan tailwind dengan menambahkan class dibawah ke sebuah elemen:
+Dapat diimplementasi dengan inline maupun extrnal css. Manun, jika kita gunakan tailwind, kita tinggal menambahkan class dibawah ke sebuah elemen:
 `class="w-20 h-10 m-6 p-4 border-4 border-orange-500"`
 
-Hasl yang dihaslikan kurang lebih seperti ini (padding tdk ada warnanya):
-[Sumber MDN Box Model](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*M1rrBjfUxoPNsda6s-V5MA.png)
+Hasil yang dihaslikan kurang lebih seperti ini (padding tdk ada warnanya):
+
+
+![Sumber MDN Box Model](https://miro.medium.com/v2/resize:fit:1400/format:webp/1*M1rrBjfUxoPNsda6s-V5MA.png)
 
 ## Konsep Flexbox dan Grid Layout
 
 - **Flexbox**: Layout **satu dimensi** yang digunakan untuk menyusun elemen dalam satu arah (horizontal atau vertikal).
-  - **Pemakaian**: Flexbox lebih baik digunakan jika kita ingin ukuran container menyesuaikan isi.
+  - **Pemakaian**: Flexbox lebih baik digunakan jika kita ingin ukuran container menyesuaikan isi. **Content First**
 - **Grid Layout**: Layout **dua dimensional** yang memungkinkan penempatan elemen secara horizontal dan vertikal.
-  - **Pemakaian**: Grid lebih baik digunakan jika kita ingin ukuran konten menyesuaikan ukuran container.
+  - **Pemakaian**: Grid lebih baik digunakan jika kita ingin ukuran konten menyesuaikan ukuran container. **Layout first**
+
+contoh:
+
+![Contoh Flex dan Grid](https://uipencil.com/wp-content/uploads/2023/02/post_feature_flexvsgrid.webp)
 
 [Sumber simplilearn flex vs grid](https://www.simplilearn.com/tutorials/css-tutorial/css-grid-vs-flexbox#:~:text=Flexbox%20is%20made%20for%20one,Grids%20can%20work%20on%20both.)
+
+## Step Pengerjaan
+Berikut adalah format README yang mencakup langkah-langkah pengerjaan:
+
+### Step 1: Menambahkan File CSS
+- Buat file CSS `styles.css` di dalam folder `static/css/`.
+- Import file CSS tersebut ke dalam template HTML menggunakan `{% load static %}` di bagian atas template, kemudian tambahkan link berikut:
+
+  ```html
+  {% load static %}
+  <link href="{% static 'css/styles.css' %}" rel="stylesheet">
+  ```
+
+## Step 2: Menambahkan CDN Tailwind
+- Untuk menggunakan Tailwind CSS, tambahkan link CDN di dalam elemen `<head>` pada file HTML, seperti berikut:
+  ```html
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@^2.2/dist/tailwind.min.css" rel="stylesheet">
+  ```
+  - Hal ini akan memungkinkan penggunaan berbagai class Tailwind langsung pada elemen HTML tanpa harus menginstal Tailwind secara lokal.
+
+## Step 3: Menambah Fitur Edit dan Delete Shop Entry Item
+- **Edit Item**:
+  - Tambahkan view untuk mengedit dan delete item di `views.py`:
+  - tambahkan button pada item card untuk delete dan edit
+  - tambah url untuk fungsi edit di `urls.py`
+  - Buat template `edit_item.html` dan gunakan Tailwind untuk membuat form lebih menarik, misalnya dengan class `form-control` dan padding (`p-4`).
+
+## Step 4: Mengkostumisasi Page Menggunakan Tailwind
+- **Tampilan List Item**:
+  - Gunakan Tailwind untuk menampilkan daftar item dengan Card agar lebih menarik.
+
+- **Form Styling**:
+  - Saya menggunakan custom variables dan external css untuk membuat styling form apada login, register, dan edit/tambah item baru
+
