@@ -2,6 +2,7 @@ from django.urls import path
 from main.views import show_main, create_shop_entry, show_xml, show_json, show_xml_by_id, show_json_by_id
 from main.views import register, login_user, logout_user
 from main.views import edit_shop_item, delete_shop_item
+from main.views import add_shop_entry_ajax
 
 app_name = 'main'
 
@@ -27,4 +28,7 @@ urlpatterns = [
     path('edit-shop-item/<uuid:id>', edit_shop_item, name='edit_shop_item'),
     
     path('delete-shop-item/<uuid:id>', delete_shop_item, name='delete_shop_item'),
+    
+    path('add-shop-entry-ajax', add_shop_entry_ajax, name='add_shop_entry_ajax'),    
+    
 ]

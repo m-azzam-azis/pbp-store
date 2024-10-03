@@ -13,16 +13,20 @@ import datetime
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST
+from django.utils.html import strip_tags
+
+
+
 
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
-    shop_entries = ShopEntry.objects.filter(user=request.user)
     context = {
         'npm' : '2306220444',
         'name': request.user.username,
         'class': 'PBP D',
-        'shop_entries': shop_entries,
         'last_login': request.COOKIES['last_login'],
     }
 
@@ -41,11 +45,11 @@ def create_shop_entry(request):
     return render(request, "create_shop_entry.html", context)
 
 def show_xml(request):
-    data = ShopEntry.objects.all()
+    data = ShopEntry.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("xml", data), content_type="application/xml")
 
 def show_json(request):
-    data = ShopEntry.objects.all()
+    data = ShopEntry.objects.filter(user=request.user)
     return HttpResponse(serializers.serialize("json", data), content_type="application/json")
 
 def show_xml_by_id(request, id):
@@ -78,6 +82,8 @@ def login_user(request):
         response = HttpResponseRedirect(reverse("main:show_main"))
         response.set_cookie('last_login', str(datetime.datetime.now()))
         return response
+    else:
+        messages.error(request, "Invalid username or password. Please try again.")
 
    else:
       form = AuthenticationForm(request)
@@ -91,10 +97,10 @@ def logout_user(request):
     return response
 
 def edit_shop_item(request, id):
-    # Get mood entry berdasarkan id
+    # Get shop entry berdasarkan id
     shop_item = ShopEntry.objects.get(pk = id)
 
-    # Set mood entry sebagai instance dari form
+    # Set shop entry sebagai instance dari form
     form = ShopEntryForm(request.POST or None, instance=shop_item)
 
     if form.is_valid() and request.method == "POST":
@@ -106,9 +112,27 @@ def edit_shop_item(request, id):
     return render(request, "edit_shop_item.html", context)
 
 def delete_shop_item(request, id):
-    # Get mood berdasarkan id
+    # Get shop berdasarkan id
     item = ShopEntry.objects.get(pk = id)
-    # Hapus mood
+    # Hapus shop
     item.delete()
     # Kembali ke halaman awal
     return HttpResponseRedirect(reverse('main:show_main'))
+
+@csrf_exempt
+@require_POST
+def add_shop_entry_ajax(request):
+    name = strip_tags(request.POST.get("name"))
+    price = strip_tags(request.POST.get("price"))
+    description = strip_tags(request.POST.get("description"))
+    sold = strip_tags(request.POST.get("sold"))
+    rating = strip_tags(request.POST.get("rating"))
+    user = request.user
+
+    new_shop_entry = ShopEntry(
+        name=name, price=price, description=description, sold=sold, rating=rating,
+        user=user
+    )
+    new_shop_entry.save()
+
+    return HttpResponse(b"CREATED", status=201)
