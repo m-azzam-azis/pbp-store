@@ -17,9 +17,6 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
 
-
-
-
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
