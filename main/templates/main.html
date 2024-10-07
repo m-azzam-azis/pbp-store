@@ -204,10 +204,12 @@ refreshShopEntries();
     // Enable the submit button only if all inputs are valid
     if (form.checkValidity()) {
       submitButton.disabled = false;
+      submitButton.classList.remove("opacity-[0.3]");
+      submitButton.classList.remove("cursor-not-allowed");
     } else {
       submitButton.disabled = true;
-      submitButton.classList.toggle("opacity-[0.3]");
-      submitButton.classList.toggle("cursor-not-allowed");
+      submitButton.classList.add("opacity-[0.3]");
+      submitButton.classList.add("cursor-not-allowed");
     }
   }
 
