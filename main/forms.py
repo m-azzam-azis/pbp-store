@@ -2,8 +2,6 @@ from django.forms import ModelForm
 from main.models import ShopEntry
 from django.utils.html import strip_tags
 
-
-
 class ShopEntryForm(ModelForm):
     class Meta:
         model = ShopEntry
