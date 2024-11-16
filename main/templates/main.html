@@ -119,6 +119,7 @@
 
     return false;
   }
+
   async function getShopEntries(){
       return fetch("{% url 'main:show_json' %}").then((res) => res.json())
   }
@@ -195,7 +196,6 @@
     document.getElementById("shop_entry_cards").innerHTML = htmlString;
 }
 refreshShopEntries();
-
 
   function toggleSubmitButtonState() {
     const form = document.querySelector("#shopEntryForm");
