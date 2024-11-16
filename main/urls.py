@@ -30,7 +30,4 @@ urlpatterns = [
     path('delete-shop-item/<uuid:id>', delete_shop_item, name='delete_shop_item'),
     
     path('add-shop-entry-ajax', add_shop_entry_ajax, name='add_shop_entry_ajax'),    
-
-
-    
 ]
