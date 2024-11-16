@@ -17,6 +17,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.views.decorators.http import require_POST
 from django.utils.html import strip_tags
 
+import json
+from django.http import JsonResponse
+
+
+
 # Create your views here.
 @login_required(login_url='/login')
 def show_main(request):
@@ -133,3 +138,24 @@ def add_shop_entry_ajax(request):
     new_shop_entry.save()
 
     return HttpResponse(b"CREATED", status=201)
+
+
+@csrf_exempt
+def create_mood_flutter(request):
+    if request.method == 'POST':
+
+        data = json.loads(request.body)
+        new_mood = ShopEntry.objects.create(
+            user=request.user,
+            name=data["name"],
+            price=int(data["price"]),
+            description=data["description"],
+            sold=int(data["sold"]),
+            rating=int(data["rating"]),
+        )
+
+        new_mood.save()
+
+        return JsonResponse({"status": "success"}, status=200)
+    else:
+        return JsonResponse({"status": "error"}, status=401)

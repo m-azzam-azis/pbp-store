@@ -3,6 +3,7 @@ from main.views import show_main, create_shop_entry, show_xml, show_json, show_x
 from main.views import register, login_user, logout_user
 from main.views import edit_shop_item, delete_shop_item
 from main.views import add_shop_entry_ajax
+from main.views import create_mood_flutter
 
 app_name = 'main'
 
@@ -30,5 +31,9 @@ urlpatterns = [
     path('delete-shop-item/<uuid:id>', delete_shop_item, name='delete_shop_item'),
     
     path('add-shop-entry-ajax', add_shop_entry_ajax, name='add_shop_entry_ajax'),    
+    
+    path('create-flutter/', create_mood_flutter, name='create_mood_flutter'),
+
+
     
 ]

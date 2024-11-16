@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-nqz=h6)ugh(81x68-$sgq@m@s$%qj8%8#7*f3d0kq!pmx(r@m&
 PRODUCTION = os.getenv("PRODUCTION", False)
 DEBUG = not PRODUCTION
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "muhammad-azzam31-pbpstore.pbp.cs.ui.ac.id"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "muhammad-azzam31-pbpstore.pbp.cs.ui.ac.id", "10.0.2.2"]
 
 # Application definition
 
@@ -39,13 +39,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'main'
+    'main',
+    'corsheaders'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -53,7 +55,14 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware', # dr tutor 4
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SAMESITE = 'None'
+SESSION_COOKIE_SAMESITE = 'None'
 ROOT_URLCONF = 'pbp_store.urls'
+
 
 TEMPLATES = [
     {
